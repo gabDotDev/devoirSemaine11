@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Devoir semaine 11 - Deplacement et Animation d'un perso </title>
+
+    <style>
+        canvas {
+            border: 1px solid black;
+            cursor: pointer;
+            background: linear-gradient(to bottom, #222222, #eeeeee);
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <!-- Créer la balise canvas et modifier ensuite ses dimensions -->
+    <canvas width="800" height="400"></canvas>
+
+    <script>
+        //Récupérer la balise canvas et définir son contexte de dessin en 2d
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+        //l'objet du personnage, qu'on pourra déplacer et animer avec les touches
+        let perso = {
+            img: new Image(),
+            posX: 0,
+            posY: 0,
+            largeur: 76,
+            hauteur: 100,
+            vitesse: 4,
+            indexVignette: 0,
+            nbVignette: 6,
+            sourceX: 0,
+        }
+        //Charger l'image du personnage en arret vers la gauche
+        perso.img.src = "images/arretGauche.png";
+
+        //Le positionner sur l'axe des X et des Y
+        perso.posX = (leCanvas.width - perso.largeur) / 2;
+        perso.posY = leCanvas.height - perso.hauteur;
+
+
+        //Déclaration de la variale monstre de type objet, ayant les propriétés minimal pour l'affichage d'une image fixe qui se déplace
+        let monstre = {
+            //image 
+            //Position de départ sur l'axe des x: 0
+            //Position sur l'axe des y: 0
+            //Vitesse horizontale du monstre: 5
+            //Vitesse verticale du monstre: 5
+            largeur: 110, //Largeur du monstre       
+            hauteur: 110 //Hauteur du monstre
+        }
+
+        //Charger la source de l'image du monstre
+
+
+        //Déclaration de la variale diamant de type objet, ayant les propriétés pour l'affichage d'une image fixe
+        let diamant
+
+
+        //Charger l'image du diamant 1
+
+
+        //Déclaration de la avaraible pour nombre de diamants ramassés
+
+
+        //Pour savoir si les touches fléchées du clavier sont appuyées
+        let flecheGauche = false;
+        let flecheDroite = false;
+
+        //On part l'actualisation du jeu avec setInterval()
+        let intervalIDActualiserJeu = setInterval(actualiserJeu, 1000 / 60);
+
+        //On part l'animation de feuille de sprite du personnage (6 ips) avec setInterval()
+
+
+        //Écouteur sur le document pour détecter si des touches de clavier sont appuyées ou relâchées
+        document.addEventListener("keydown", presserTouche);
+        document.addEventListener("keyup", relacherTouche);
+
+
+        /////////////////// LES FONCTIONS /////////////////// 
+
+        // Détecte quelles touches sont appuyées et recommence la partie
+        function presserTouche(event) {
+            console.log("presserTouche", event.keyCode);
+            //Enregistrer si une touche gauche/droite est pressée
+            if (event.keyCode == 39) { //flèche droite
+                flecheDroite = true;
+                flecheGauche = false;
+            }
+            if (event.keyCode == 37) { //flèche gauche
+                flecheGauche = true;
+                flecheDroite = false;
+            }
+
+        }
+
+        function relacherTouche(event) {
+            //console.log("relacherTouche", event.keyCode);
+
+            //Enregistrer si une touche gauche/droite est relâchée
+            if (event.keyCode == 39) { //flèche droite
+                flecheDroite = false;
+                //********modifier la source du personnage pour arret droite
+            }
+            if (event.keyCode == 37) { //flèche gauche
+                flecheGauche = false;
+                //******modifier la source du personnage pour arret gauche
+            }
+
+        }
+
+        //Détecte si l'objet 1 touche l'objet 2
+        function detecterCollision(objet1, objet2) {
+
+            if (objet1.posX < objet2.posX + objet2.largeur &&
+                objet1.posX + objet1.largeur > objet2.posX &&
+                objet1.posY < objet2.posY + objet2.hauteur &&
+                objet1.posY + objet1.hauteur > objet2.posY) {
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        //Actualiser l'affichage des objets et les actions du jeu
+        function actualiserJeu() {
+            //Effacer le contenu actuel du contexte de rendu du canvas
+            ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
+
+            //Dessiner l'image du diamant
+
+            //Déplacer le personnage
+            deplacerPerso();
+
+            //Déplacer le monstre - ***********Enlever le commentaire
+            //deplacerMonstre();
+
+            //S'il y a collision entre perso et le monstre le jeu s'arrête
+            let collisionPersoMonstre = detecterCollision(perso, monstre);
+            if (collisionPersoMonstre == true) {
+                //                clearInterval(        );
+                //                clearInterval(        );
+            }
+
+            //Vérifier s'il y a collision entre personnage et diammant
+
+
+            //S'il y a collision entre perso-diammant alors,
+
+            //Modifier la position en X de l'objet diammant en gérérant une valuer aléatoire entre 0 et la largeur du canvas - la largeur de l'image
+
+
+            //Modifier la source de l'image en générant une valeur entre 1 et 3
+            //Pour obtenir les noms diamant1.png ou diammant2.png ou diammant3.png
+
+
+            //Augmenter de 1 le nombre de diammants ramassés
+
+
+            //fin si
+
+            //Afficher le score
+            afficherScore();
+
+        }
+
+
+        //Fonction pour déplacer et dessiner le personagge
+        function deplacerPerso() {
+
+            //Calculer les futures positions du perso et ses images
+            if (flecheDroite) {
+                perso.posX += perso.vitesse;
+
+                //modifier la source de l'image pour la course vers la droite
+
+            }
+            if (flecheGauche) {
+                perso.posX -= perso.vitesse;
+                //modifier l'image pour la course vers la gauche
+            }
+
+
+            //Empêcher le perso de quitter les limites de la scène
+            //----- Axe horizontal
+            //Limite gauche
+            if (perso.posX < 0) {
+                perso.posX = 0
+            }
+            //Limite droite
+            let posXmax = leCanvas.width - perso.largeur;
+            if (perso.posX > posXmax) {
+                perso.posX = posXmax;
+            }
+
+            //Dessiner le personnage avec le drawImage pour l'animation du personnage
+
+        }
+
+
+        //Fonction pour animer la feuille de sprite du perso
+        function animerperso() {
+            //Le coin gauche de la vignette: sourceX
+            perso.sourceX = perso.indexVignette * perso.largeur;
+
+            //Incrémenter et gérer l'index de la future vignette à afficher
+            perso.indexVignette += 1;
+
+            if (perso.indexVignette == perso.nbVignette) {
+                perso.indexVignette = 0;
+            }
+
+        }
+
+        //Fonction pour déplacer le monstre
+        function deplacerMonstre() {
+
+            //Modifier la position horizontale 
+            monstre.posX += monstre.vitesseX;
+            monstre.posY += monstre.vitesseY; //*************************
+
+
+            //Si le monstre touche les côtés droit ou gauche du canvas
+            //On inverse la vitesseX
+            let posXmax = leCanvas.width - monstre.largeur;
+
+            if (monstre.posX < 0 || monstre.posX > posXmax) {
+                monstre.vitesseX *= -1; //ou monstre.vitesse = -monstre.vitesse
+            }
+
+            //Si le monstre touche le haut ou le bas du canvas
+            //On inverse la vitesseY
+            let posYmax = leCanvas.height - monstre.hauteur;
+
+            if (monstre.posY < 0 || monstre.posY > posYmax) {
+                monstre.vitesseY *= -1; //ou monstre.vitesse = -monstre.vitesse
+            }
+
+            //Dessiner le monstre
+            ctx.drawImage(monstre.img, monstre.posX, monstre.posY);
+        }
+
+        //Fonction pour dessiner le texte
+        function afficherScore() {
+            //Styles du texte      
+            ctx.font = " 32px Calibri";
+            ctx.textBaseline = "top";
+            ctx.fillStyle = "#f00f00";
+            ctx.textAlign = "center";
+
+            //Desssiner le score
+
+        }
+
+    </script>
+
+</body>
+
+</html>
