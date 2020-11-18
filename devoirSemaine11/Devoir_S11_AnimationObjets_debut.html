@@ -35,7 +35,7 @@
             vitesse: 4,
             indexVignette: 0,
             nbVignette: 6,
-            sourceX: 0,
+            sourceX: 0
         }
         //Charger l'image du personnage en arret vers la gauche
         perso.img.src = "images/arretGauche.png";
@@ -69,13 +69,9 @@
             //Position de départ sur l'axe des x: 0,
             posX: Math.random() * leCanvas.width,
             //Position sur l'axe des y: 0,
-            posY: leCanvas.height,
-            //Vitesse horizontale du monstre: 5
-            vitesseX: 5,
-            //Vitesse verticale du monstre: 5,
-            vitesseY: 5,
-            largeur: 110, //Largeur du monstre       
-            hauteur: 110 //Hauteur du monstre
+            largeur: 46, //Largeur du diamant    
+            hauteur: 50, //Hauteur du diamant
+            posY: 0
         }
         //Charger l'image du diamant 1
         diamant.img.src = "images/diamant1.png";
@@ -153,6 +149,7 @@
             ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
 
             //Dessiner l'image du diamant
+            diamant.posY = leCanvas.height - diamant.hauteur;
             ctx.drawImage(diamant.img, diamant.posX, diamant.posY);
             //Déplacer le personnage
             deplacerPerso();
@@ -167,13 +164,13 @@
                 clearInterval(animationPerso);
             }
 
-            //Vérifier s'il y a collision entre personnage et diammant
+            //Vérifier s'il y a collision entre personnage et diamant
             let collisionPersoDiamant = detecterCollision(perso, diamant);
 
-            //S'il y a collision entre perso-diammant alors,
+            //S'il y a collision entre perso-diamant alors,
             if (collisionPersoDiamant){
 
-            //Modifier la position en X de l'objet diammant en gérérant une valuer aléatoire entre 0 et la largeur du canvas - la largeur de l'image
+            //Modifier la position en X de l'objet diamant en gérérant une valeur aléatoire entre 0 et la largeur du canvas - la largeur de l'image
                 diamant.posX = Math.random() * leCanvas.width;
 
             //Modifier la source de l'image en générant une valeur entre 1 et 3
@@ -200,8 +197,8 @@
 
                 //modifier la source de l'image pour la course vers la droite
                 perso.img.src = "images/courseDroite.png";
-
             }
+
             if (flecheGauche) {
                 perso.posX -= perso.vitesse;
                 //modifier l'image pour la course vers la gauche
@@ -280,8 +277,8 @@
             ctx.textAlign = "center";
 
             //Desssiner le score
-            
-
+            ctx.fillText("DIAMANTS : " + diamantsRamasses, leCanvas.width/2, 0);
+            ctx.fillText();
         }
 
     </script>
